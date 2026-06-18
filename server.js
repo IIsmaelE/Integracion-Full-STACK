@@ -34,5 +34,34 @@ await nuevoProducto.save();
 res.json({ mensaje: "Producto registrado", nuevoProducto });
 });
 
+
+// EDITAR
+app.put('/productos/:id', async (req, res) => {
+
+    const productoActualizado =
+    await Producto.findByIdAndUpdate(
+        req.params.id,
+        req.body,
+        { new:true }
+    );
+
+    res.json(productoActualizado);
+
+});
+
+// ELIMINAR
+app.delete('/productos/:id', async (req, res) => {
+
+    await Producto.findByIdAndDelete(
+        req.params.id
+    );
+
+    res.json({
+        mensaje:"Producto eliminado"
+    });
+
+});
+
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Servidor activo en puerto ${PORT}`));
